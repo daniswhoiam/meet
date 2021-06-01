@@ -34,7 +34,7 @@ describe('<CitySearch /> component', () => {
       }
     };
     CitySearchWrapper.find('.city').simulate('change', eventObject);
-    expect(CitySearchWrapper.state('query')).toBe('Berlin');
+    expect(CitySearchWrapper.state('query')).toBe(eventObject.target.value);
   });
 
   test('render list of suggestions correctly', () => {
