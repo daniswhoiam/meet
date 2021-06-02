@@ -25,10 +25,10 @@ describe('<Event /> component', () => {
       eventEnd: mockEvent.end.dateTime
     }
     const actualInfo = {
-      eventName: EventWrapper.find('.event-name').props().value,
-      eventLocation: EventWrapper.find('.event-location').props().value,
-      eventStart: EventWrapper.find('.event-start').props().value,
-      eventEnd: EventWrapper.find('.event-end').props().value
+      eventName: EventWrapper.find('.event-name').prop('data-value'),
+      eventLocation: EventWrapper.find('.event-location').prop('data-value'),
+      eventStart: EventWrapper.find('.event-start').prop('data-value'),
+      eventEnd: EventWrapper.find('.event-end').prop('data-value')
     }
     expect(actualInfo).toMatchObject(expectedInfo);
   });

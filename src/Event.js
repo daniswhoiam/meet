@@ -20,29 +20,28 @@ class Event extends Component {
     const eventEnd = new Date(event.end.dateTime).toUTCString();
 
     return(
-      <div className="event">
+      <article className="event">
         {/* Basic event info */}
-        <div className="event-name" value={event.summary}>{event.summary}</div>
-        <div className="event-location" value={event.location}>{event.location}</div>
+        <h2 className="event-name" data-value={event.summary}>{event.summary}</h2>
+        <address className="event-location" data-value={event.location}>{event.location}</address>
         <div className="event-time-wrapper">
-          <div className="event-start" value={event.start.dateTime}>{eventStart}</div>
-          <div className="event-end" value={event.end.dateTime}>{eventEnd}</div>
+          <time className="event-start" data-value={event.start.dateTime}>{eventStart}</time>
+          <time className="event-end" data-value={event.end.dateTime}>{eventEnd}</time>
         </div>
         {/* Expandable event info */}
         {
           this.state.showDetails &&
           <div className="event-details">
-            <div className="event-description">{event.description}</div>
-            <a href={event.htmlLink}>View in calendar</a>
+            <p className="event-description">{event.description}</p>
+            <a href={event.htmlLink} rel="external">View in calendar</a>
           </div>
         }
         {/* Expand buttom */}
         <button 
           className={this.state.showDetails ? "hide-details" : "show-details"}
           onClick={this.handleShowDetails}
-          value={this.state.showDetails ? "Hide Details" : "Show Details"}
-        ></button>
-      </div>
+        >{this.state.showDetails ? "Hide Details" : "Show Details"}</button>
+      </article>
     );
   }
 }
