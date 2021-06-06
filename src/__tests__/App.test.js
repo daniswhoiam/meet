@@ -48,7 +48,7 @@ describe('<App /> integration', () => {
   });
 
   test('Get list of events matching the city selected by the user', async () => {
-    const AppWrapper = mount(<App />);
+    const AppWrapper = await mount(<App />);
     const CitySearchWrapper = AppWrapper.find(CitySearch);
     const locations = extractLocations(mockData);
 
@@ -64,11 +64,12 @@ describe('<App /> integration', () => {
     const eventsToShow = allEvents.filter(event => event.location === selectedCity);
     
     expect(AppWrapper.state('events')).toEqual(eventsToShow);
+    expect(AppWrapper.state('currentLocation')).toEqual(selectedCity);
     AppWrapper.unmount();
   });
 
   test('Get list of all events when user selects "See all cities"', async () => {
-    const AppWrapper = mount(<App />);
+    const AppWrapper = await mount(<App />);
     const suggestionItems = AppWrapper.find(CitySearch).find('.suggestions li');
 
     await suggestionItems.at(suggestionItems.length - 1).simulate('click');
@@ -76,6 +77,48 @@ describe('<App /> integration', () => {
 
     expect(AppWrapper.state('events')).toEqual(allEvents);
     AppWrapper.unmount();
-  })
+  });
+
+  test('Load max. default number of events by default', async () => {
+    const AppWrapper = await mount(<App />);
+    const AppEventsState = AppWrapper.state('events');
+    const defaultNumber = AppWrapper.find(NumberOfEvents).state('numberSetting');
+
+    expect(AppEventsState).toHaveLength(Math.min(AppEventsState.length, defaultNumber));
+    AppWrapper.unmount();
+  });
+
+  test('Load number of events specified in NumberOfEvents', async () => {
+    const AppWrapper = await mount(<App />);
+    const numberInput = AppWrapper.find(NumberOfEvents).find('.event-number-input');
+    const eventObject = {
+      target: {
+        value: 2
+      }
+    };
+
+    await numberInput.simulate('change', eventObject);
+    const AppEventsState = AppWrapper.state('events');
+    expect(AppEventsState).toHaveLength(eventObject.target.value);
+  });
+
+  test('Maintain location selection when changing number of events shown', async () => {
+    const AppWrapper = await mount(<App />);
+    AppWrapper.setState({
+      currentLocation: 'Berlin'
+    });
+    const AppCurrentLocationState = AppWrapper.state('currentLocation');
+    const numberInput = AppWrapper.find(NumberOfEvents).find('.event-number-input');
+    const eventObject = {
+      target: {
+        value: 2
+      }
+    };
+
+    await numberInput.simulate('change', eventObject);
+    expect(AppCurrentLocationState).not.toEqual(undefined);
+    console.log(AppWrapper.state('currentLocation'));
+    expect(AppWrapper.state('currentLocation')).toEqual(AppCurrentLocationState);
+  });
 
 });

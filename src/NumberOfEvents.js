@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class NumberOfEvents extends Component {
   state = {
-    numberSetting: 32
+    numberSetting: this.props.eventNumber
   };
 
   handleNumberSetting = event => {
@@ -10,6 +10,7 @@ class NumberOfEvents extends Component {
     this.setState({
       numberSetting: newValue
     });
+    this.props.updateEvents(null, newValue);
   };
 
   render() {
