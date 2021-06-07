@@ -100,6 +100,7 @@ describe('<App /> integration', () => {
     await numberInput.simulate('change', eventObject);
     const AppEventsState = AppWrapper.state('events');
     expect(AppEventsState).toHaveLength(eventObject.target.value);
+    AppWrapper.unmount();
   });
 
   test('Maintain location selection when changing number of events shown', async () => {
@@ -117,8 +118,9 @@ describe('<App /> integration', () => {
 
     await numberInput.simulate('change', eventObject);
     expect(AppCurrentLocationState).not.toEqual(undefined);
-    console.log(AppWrapper.state('currentLocation'));
+
     expect(AppWrapper.state('currentLocation')).toEqual(AppCurrentLocationState);
+    AppWrapper.unmount();
   });
 
 });

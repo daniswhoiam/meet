@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Event extends Component {
   state = {
@@ -44,6 +45,17 @@ class Event extends Component {
       </article>
     );
   }
+}
+
+Event.propTypes = {
+  event: PropTypes.shape({
+    start: PropTypes.string.isRequired,
+    end: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    htmlLink: PropTypes.string.isRequired
+  })
 }
 
 export default Event;
