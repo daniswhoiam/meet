@@ -49,13 +49,17 @@ class Event extends Component {
 
 Event.propTypes = {
   event: PropTypes.shape({
-    start: PropTypes.string.isRequired,
-    end: PropTypes.string.isRequired,
+    start: PropTypes.shape({
+      dateTime: PropTypes.string.isRequired
+    }).isRequired,
+    end: PropTypes.shape({
+      dateTime: PropTypes.string.isRequired
+    }).isRequired,
     summary: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     htmlLink: PropTypes.string.isRequired
-  })
+  }).isRequired
 }
 
 export default Event;
