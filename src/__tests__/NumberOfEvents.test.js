@@ -5,15 +5,11 @@ import NumberOfEvents from '../NumberOfEvents';
 describe('<NumberOfEvents /> component', () => {
   let NumberOfEventsWrapper;
   beforeAll(() => {
-    NumberOfEventsWrapper = shallow(<NumberOfEvents />);
+    NumberOfEventsWrapper = shallow(<NumberOfEvents updateEvents={() => {}} eventNumber={32} />);
   });
 
   test('There is a field to change the number of events shown', () => {
     expect(NumberOfEventsWrapper.find('.event-number-input')).toHaveLength(1);
-  });
-
-  test('The default setting is 32 events', () => {
-    expect(NumberOfEventsWrapper.state('numberSetting')).toBe(32);
   });
 
   test('The input field displays the right value', () => {

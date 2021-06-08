@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class NumberOfEvents extends Component {
   state = {
-    numberSetting: 32
+    numberSetting: this.props.eventNumber
   };
 
   handleNumberSetting = event => {
@@ -10,6 +11,7 @@ class NumberOfEvents extends Component {
     this.setState({
       numberSetting: newValue
     });
+    this.props.updateEvents(null, newValue);
   };
 
   render() {
@@ -22,6 +24,11 @@ class NumberOfEvents extends Component {
       />
     );
   }
+}
+
+NumberOfEvents.propTypes = {
+  eventNumber: PropTypes.number.isRequired,
+  updateEvents: PropTypes.func.isRequired
 }
 
 export default NumberOfEvents;
