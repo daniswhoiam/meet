@@ -8,7 +8,11 @@ describe('show/hide an events details', () => {
   let page;
 
   beforeAll(async () => {
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch(/* {
+      headless: false,
+      slowMo: 250, // slow down by 250ms
+      ignoreDefaultArgs: ['--disable-extensions'] // ignores default setting that causes timeout errors
+    } */);
     page = await browser.newPage();
     await page.goto('http://localhost:3000/');
     await page.waitForSelector('.event');
@@ -43,7 +47,11 @@ describe('filter events by city', () => {
   let page;
 
   beforeAll(async () => {
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch(/* {
+      headless: false,
+      slowMo: 250, // slow down by 250ms
+      ignoreDefaultArgs: ['--disable-extensions'] // ignores default setting that causes timeout errors
+    } */);
     page = await browser.newPage();
     await page.goto('http://localhost:3000/');
   });
@@ -54,10 +62,36 @@ describe('filter events by city', () => {
 
   test('Show events from all cities by default', async () => {
     await page.waitForSelector('.EventList');
-    const locations = await page.$$('.event-location');
-    const locationsWithoutDuplicates = [...locations];
+    const locations = await page.$$eval('.event-location', l => {
+      return l.map(el => el.getAttribute('data-value'));
+    });
+    const locationsWithoutDuplicates = [...new Set(locations)];
+
     expect(locationsWithoutDuplicates).toBeDefined();
     expect(locationsWithoutDuplicates).not.toHaveLength(1);
+  });
+
+  test('User should see suggestions when searching for a city', async () => {
+    await page.waitForSelector('.CitySearch');
+    await page.focus('.city');
+    await page.keyboard.type('Berlin');
+    await page.waitForSelector('.suggestions');
+    const suggestions = await page.$$('.suggestions li');
+
+    expect(suggestions).toBeDefined();
+    expect(suggestions).not.toHaveLength(1);
+  });
+
+  test('User can select a city from the suggestions', async () => {
+    await page.click('.suggestions li');
+    await page.waitForFunction(() => !document.querySelector('.nprogress-busy')); // Wait until page has loaded
+    const locations = await page.$$eval('.event-location', l => {
+      return l.map(el => el.getAttribute('data-value'));
+    });
+    const locationsWithoutDuplicates = [...new Set(locations)];
+
+    expect(locationsWithoutDuplicates).toBeDefined();
+    expect(locationsWithoutDuplicates).toHaveLength(1);
   });
 
 });
