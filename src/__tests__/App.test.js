@@ -85,7 +85,7 @@ describe('<App /> integration', () => {
     const defaultNumber = AppWrapper.find(NumberOfEvents).state('numberSetting');
 
     /* Include EventList in test */
-    const EventListWrapper = mount(<EventList events={AppEventsState}/>);
+    const EventListWrapper = AppWrapper.find(EventList);
     const eventsProp = EventListWrapper.props().events;
 
     expect(AppEventsState).toHaveLength(Math.min(AppEventsState.length, defaultNumber));
@@ -94,7 +94,6 @@ describe('<App /> integration', () => {
     expect(eventsProp).toHaveLength(Math.min(eventsProp.length, defaultNumber));
     expect(EventListWrapper.find('li')).toHaveLength(Math.min(eventsProp.length, defaultNumber));
 
-    EventListWrapper.unmount();
     AppWrapper.unmount();
   });
 
@@ -108,9 +107,10 @@ describe('<App /> integration', () => {
     };
     await numberInput.simulate('change', eventObject);
 
+    AppWrapper.update();
     const AppEventsState = AppWrapper.state('events');
     /* Include EventList in test */
-    const EventListWrapper = mount(<EventList events={AppEventsState}/>);
+    const EventListWrapper = AppWrapper.find(EventList);
     const eventsProp = EventListWrapper.props().events;
 
     expect(AppEventsState).toHaveLength(eventObject.target.value);
@@ -118,7 +118,6 @@ describe('<App /> integration', () => {
     expect(eventsProp.length).toEqual(eventObject.target.value);
     expect(EventListWrapper.find('li')).toHaveLength(eventObject.target.value);
 
-    EventListWrapper.unmount();
     AppWrapper.unmount();
   });
 
