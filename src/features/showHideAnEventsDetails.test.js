@@ -40,6 +40,8 @@ defineFeature(feature, test => {
     });
 
     when('user clicks on -Show Details- button for an event', () => {
+      expect(EventWrapper.find('.event .show-details')).toBeDefined();
+
       EventWrapper.find('.event .show-details').props().onClick();
       EventListWrapper.update();
       EventWrapper = EventListWrapper.find(Event).at(0);
@@ -60,12 +62,17 @@ defineFeature(feature, test => {
 
     and('a user has already expanded a certain event', () => {
       EventWrapper = EventListWrapper.find(Event).at(0);
+      
+      expect(EventWrapper.find('.event .show-details')).toBeDefined();
+
       EventWrapper.find('.event .show-details').props().onClick();
       EventListWrapper.update();
       EventWrapper = EventListWrapper.find(Event).at(0);
     });
 
     when('user clicks on -Hide Details- button for that event', () => {
+      expect(EventWrapper.find('.event .hide-details')).toBeDefined();
+
       EventWrapper.find('.event .hide-details').props().onClick();
       EventListWrapper.update();
       EventWrapper = EventListWrapper.find(Event).at(0);
