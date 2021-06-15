@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { ErrorAlert } from './Alert';
 
 class NumberOfEvents extends Component {
   state = {
@@ -8,20 +9,32 @@ class NumberOfEvents extends Component {
 
   handleNumberSetting = event => {
     const newValue = event.target.value;
-    this.setState({
-      numberSetting: newValue
-    });
-    this.props.updateEvents(null, newValue);
+
+    if (newValue <= 0 || newValue >= 100) {
+      this.setState({
+        numberSetting: newValue,
+        errorText: 'Please enter a valid number of events to show.'
+      });
+    } else {
+      this.setState({
+        numberSetting: newValue,
+        errorText: ''
+      });
+      this.props.updateEvents(null, newValue);
+    }    
   };
 
   render() {
     return(
-      <input 
-        className="event-number-input"
-        value={this.state.numberSetting}
-        onChange={this.handleNumberSetting}
-        type="number"
-      />
+      <div className="NumberOfEvents">
+        <input 
+          className="event-number-input"
+          value={this.state.numberSetting}
+          onChange={this.handleNumberSetting}
+          type="number"
+        />
+        <ErrorAlert text={this.state.errorText} />
+      </div>
     );
   }
 }
