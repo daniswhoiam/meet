@@ -13,18 +13,9 @@ describe('<NumberOfEvents /> component', () => {
   });
 
   test('The input field displays the right value', () => {
-    const numberSetting = NumberOfEventsWrapper.state('numberSetting');
+    console.log(NumberOfEventsWrapper.debug());
+    const numberSetting = NumberOfEventsWrapper.instance().props.eventNumber;
     expect(NumberOfEventsWrapper.find('.event-number-input').prop('value')).toBe(numberSetting);
-  });
-
-  test('Change state when number input changes', () => {
-    const eventObject = {
-      target: {
-        value: 10
-      }
-    };
-    NumberOfEventsWrapper.find('.event-number-input').simulate('change', eventObject);
-    expect(NumberOfEventsWrapper.state('numberSetting')).toBe(eventObject.target.value);
   });
   
 });

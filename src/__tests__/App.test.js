@@ -82,7 +82,7 @@ describe('<App /> integration', () => {
   test('Load max. default number of events by default', async () => {
     const AppWrapper = await mount(<App />);
     const AppEventsState = AppWrapper.state('events');
-    const defaultNumber = AppWrapper.find(NumberOfEvents).state('numberSetting');
+    const defaultNumber = AppWrapper.state('eventNumber');
 
     /* Include EventList in test */
     const EventListWrapper = AppWrapper.find(EventList);
