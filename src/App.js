@@ -40,8 +40,15 @@ class App extends Component {
       const numberLocationEvents = locationEvents.slice(0, number);
       this.setState({
         events: numberLocationEvents,
-        currentLocation: location
+        currentLocation: location,
+        eventNumber: number
       });
+    });
+  }
+
+  displayEventNumber = number => {
+    this.setState({
+      eventNumber: number
     });
   }
 
@@ -50,7 +57,7 @@ class App extends Component {
       <div className="App">
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
         <EventList events={this.state.events} />
-        <NumberOfEvents eventNumber={this.state.eventNumber} updateEvents={this.updateEvents} />
+        <NumberOfEvents eventNumber={this.state.eventNumber} updateEvents={this.updateEvents} displayEventNumber={this.displayEventNumber} />
       </div>
     );
   }
