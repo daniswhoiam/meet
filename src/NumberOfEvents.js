@@ -14,6 +14,7 @@ class NumberOfEvents extends Component {
       this.setState({
         errorText: 'Please enter a valid number of events to show.'
       });
+      this.props.displayEventNumber(newValue);
     } else {
       this.setState({
         errorText: ''
@@ -39,7 +40,8 @@ class NumberOfEvents extends Component {
 
 NumberOfEvents.propTypes = {
   eventNumber: PropTypes.number.isRequired,
-  updateEvents: PropTypes.func.isRequired
+  updateEvents: PropTypes.func.isRequired,
+  displayEventNumber: PropTypes.func.isRequired
 }
 
 export default NumberOfEvents;
