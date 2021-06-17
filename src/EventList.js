@@ -7,13 +7,13 @@ class EventList extends Component {
   warningMessage = 'You are offline. The displayed information might not be up-to-date';
 
   state = {
-    warningText: navigator.onLine ? this.warningMessage : ''
+    warningText: navigator.onLine ? '' : this.warningMessage
   }
 
   toggleOfflineMessage = () => {
     navigator.onLine ? 
-      this.setState({ warningText: this.warningMessage }) :
-      this.setState({ warningText: '' });
+      this.setState({ warningText: '' }) :
+      this.setState({ warningText: this.warningMessage });
   }
 
   render() {
