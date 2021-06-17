@@ -24,7 +24,7 @@ class EventList extends Component {
 
     return(
       <>
-        <WarningAlert warningText={this.state.warningText} />
+        <WarningAlert text={this.state.warningText} />
         <ul className="EventList">
           {events.map(event => 
             <li key={event.id}>
