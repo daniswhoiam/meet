@@ -4,17 +4,18 @@ import Event from './Event';
 import { WarningAlert } from './Alert';
 
 class EventList extends Component {
-  warningMessage = 'You are offline. The displayed information might not be up-to-date';
+  warningMessage =
+    'You are offline. The displayed information might not be up-to-date';
 
   state = {
     warningText: navigator.onLine ? '' : this.warningMessage
-  }
+  };
 
   toggleOfflineMessage = () => {
-    navigator.onLine ? 
-      this.setState({ warningText: '' }) :
-      this.setState({ warningText: this.warningMessage });
-  }
+    navigator.onLine
+      ? this.setState({ warningText: '' })
+      : this.setState({ warningText: this.warningMessage });
+  };
 
   render() {
     const { events } = this.props;
@@ -22,15 +23,15 @@ class EventList extends Component {
     window.addEventListener('offline', this.toggleOfflineMessage);
     window.addEventListener('online', this.toggleOfflineMessage);
 
-    return(
+    return (
       <>
         <WarningAlert text={this.state.warningText} />
         <ul className="EventList">
-          {events.map(event => 
+          {events.map(event => (
             <li key={event.id}>
               <Event event={event} />
-            </li>  
-          )}
+            </li>
+          ))}
         </ul>
       </>
     );
@@ -39,6 +40,6 @@ class EventList extends Component {
 
 EventList.propTypes = {
   events: PropTypes.array.isRequired
-}
+};
 
 export default EventList;

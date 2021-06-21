@@ -8,7 +8,7 @@ class CitySearch extends Component {
     suggestions: [],
     showSuggestions: undefined,
     infoText: ''
-  }
+  };
 
   handleInputChanged = event => {
     const value = event.target.value;
@@ -19,7 +19,8 @@ class CitySearch extends Component {
     if (suggestions.length === 0) {
       this.setState({
         query: value,
-        infoText: 'We can not find the city you are looking for. Please try another city.'
+        infoText:
+          'We can not find the city you are looking for. Please try another city.'
       });
     } else {
       this.setState({
@@ -28,7 +29,7 @@ class CitySearch extends Component {
         infoText: ''
       });
     }
-  }
+  };
 
   handleItemClicked = suggestion => {
     this.setState({
@@ -39,10 +40,10 @@ class CitySearch extends Component {
     });
 
     this.props.updateEvents(suggestion, null);
-  }
+  };
 
-  render () {
-    return(
+  render() {
+    return (
       <div className="CitySearch">
         <InfoAlert text={this.state.infoText} />
         <input
@@ -51,23 +52,35 @@ class CitySearch extends Component {
           value={this.state.query}
           onChange={this.handleInputChanged}
           onFocus={() => this.setState({ showSuggestions: true })}
+          onBlur={e => {
+            if (
+              e.relatedTarget === null ||
+              (e.relatedTarget && !(e.relatedTarget.className === 'suggestion'))
+            ) {
+              this.setState({ showSuggestions: false });
+            }
+          }}
         />
         <div className="suggestions-wrapper">
-          <ul 
+          <ul
             className="suggestions"
             style={this.state.showSuggestions ? {} : { display: 'none' }}
           >
-            {this.state.suggestions.map((suggestion) => (
-              <li 
+            {this.state.suggestions.map(suggestion => (
+              <li
                 key={suggestion}
+                className="suggestion"
                 onClick={() => this.handleItemClicked(suggestion)}
+                tabIndex="0"
               >
                 {suggestion}
               </li>
             ))}
-            <li 
-              key='all'
-              onClick={() => this.handleItemClicked("all")}
+            <li
+              className="suggestion"
+              tabIndex="0"
+              key="all"
+              onClick={() => this.handleItemClicked('all')}
             >
               <b>See all cities</b>
             </li>
@@ -81,6 +94,6 @@ class CitySearch extends Component {
 CitySearch.propTypes = {
   locations: PropTypes.array.isRequired,
   updateEvents: PropTypes.func.isRequired
-}
+};
 
 export default CitySearch;

@@ -5,7 +5,7 @@ import { ErrorAlert } from './Alert';
 class NumberOfEvents extends Component {
   state = {
     errorText: ''
-  }
+  };
 
   handleNumberSetting = event => {
     const newValue = event.target.value;
@@ -20,13 +20,13 @@ class NumberOfEvents extends Component {
         errorText: ''
       });
       this.props.updateEvents(null, newValue);
-    }    
+    }
   };
 
   render() {
-    return(
+    return (
       <div className="NumberOfEvents">
-        <input 
+        <input
           className="event-number-input"
           value={this.props.eventNumber}
           onChange={this.handleNumberSetting}
@@ -42,6 +42,6 @@ NumberOfEvents.propTypes = {
   eventNumber: PropTypes.number.isRequired,
   updateEvents: PropTypes.func.isRequired,
   displayEventNumber: PropTypes.func.isRequired
-}
+};
 
 export default NumberOfEvents;

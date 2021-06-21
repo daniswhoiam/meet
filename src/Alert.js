@@ -10,7 +10,7 @@ class Alert extends Component {
     return {
       color: this.color
     };
-  }
+  };
 
   render() {
     return (

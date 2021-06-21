@@ -8,8 +8,10 @@ describe('<CitySearch /> component', () => {
   let locations, CitySearchWrapper;
   beforeAll(() => {
     locations = extractLocations(mockData);
-    CitySearchWrapper = shallow(<CitySearch locations={locations} updateEvents={() => {}}/>);
-  })
+    CitySearchWrapper = shallow(
+      <CitySearch locations={locations} updateEvents={() => {}} />
+    );
+  });
 
   test('render text input', () => {
     expect(CitySearchWrapper.find('.city')).toHaveLength(1);
@@ -42,10 +44,14 @@ describe('<CitySearch /> component', () => {
       suggestions: locations
     });
     const suggestions = CitySearchWrapper.state('suggestions');
-    expect(CitySearchWrapper.find('.suggestions li')).toHaveLength(suggestions.length + 1);
+    expect(CitySearchWrapper.find('.suggestions li')).toHaveLength(
+      suggestions.length + 1
+    );
 
     for (let i = 0; i < suggestions.length; i++) {
-      expect(CitySearchWrapper.find('.suggestions li').at(i).text()).toBe(suggestions[i]);
+      expect(CitySearchWrapper.find('.suggestions li').at(i).text()).toBe(
+        suggestions[i]
+      );
     }
   });
 
@@ -58,11 +64,11 @@ describe('<CitySearch /> component', () => {
       target: {
         value: 'Berlin'
       }
-    })
+    });
     const query = CitySearchWrapper.state('query');
     const filteredLocations = locations.filter(location => {
       return location.toUpperCase().indexOf(query.toUpperCase()) > -1;
-    })
+    });
     expect(CitySearchWrapper.state('suggestions')).toEqual(filteredLocations);
   });
 
@@ -78,7 +84,9 @@ describe('<CitySearch /> component', () => {
   test('selecting CitySearch input reveals the suggestions list', () => {
     CitySearchWrapper.find('.city').simulate('focus');
     expect(CitySearchWrapper.state('showSuggestions')).toBe(true);
-    expect(CitySearchWrapper.find('.suggestions').prop('style')).not.toEqual({ display: 'none' });
+    expect(CitySearchWrapper.find('.suggestions').prop('style')).not.toEqual({
+      display: 'none'
+    });
   });
 
   test('selecting a suggestion should hide the suggestions list', () => {
@@ -88,7 +96,8 @@ describe('<CitySearch /> component', () => {
     });
     CitySearchWrapper.find('.suggestions li').at(0).simulate('click');
     expect(CitySearchWrapper.state('showSuggestions')).toBe(false);
-    expect(CitySearchWrapper.find('.suggestions').prop('style')).toEqual({ display: 'none' });
+    expect(CitySearchWrapper.find('.suggestions').prop('style')).toEqual({
+      display: 'none'
+    });
   });
-
 });

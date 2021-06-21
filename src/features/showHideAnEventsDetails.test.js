@@ -8,7 +8,6 @@ import { mockData } from '../mock-data';
 const feature = loadFeature('./src/features/showHideAnEventsDetails.feature');
 
 defineFeature(feature, test => {
-
   test('An event element is collapsed by default', ({ given, when, then }) => {
     let EventListWrapper;
     let EventWrapper;
@@ -18,16 +17,19 @@ defineFeature(feature, test => {
       EventWrapper = EventListWrapper.find(Event);
     });
 
-    when('the user does not perform any action', () => {
-
-    });
+    when('the user does not perform any action', () => {});
 
     then('the event element should be collapsed', () => {
       expect(EventWrapper.find('.event-details')).toHaveLength(0);
     });
   });
 
-  test('User can expand an event to see its details', ({ given, and, when, then }) => {
+  test('User can expand an event to see its details', ({
+    given,
+    and,
+    when,
+    then
+  }) => {
     let EventListWrapper;
     let EventWrapper;
     given('the list of events has been loaded', () => {
@@ -52,7 +54,12 @@ defineFeature(feature, test => {
     });
   });
 
-  test('User can collapse an event to hide its details', ({ given, and, when, then }) => {
+  test('User can collapse an event to hide its details', ({
+    given,
+    and,
+    when,
+    then
+  }) => {
     let EventListWrapper;
     let EventWrapper;
     given('the list of events has been loaded', () => {
@@ -62,7 +69,7 @@ defineFeature(feature, test => {
 
     and('a user has already expanded a certain event', () => {
       EventWrapper = EventListWrapper.find(Event).at(0);
-      
+
       expect(EventWrapper.find('.event .show-details')).toBeDefined();
 
       EventWrapper.find('.event .show-details').props().onClick();
@@ -78,9 +85,11 @@ defineFeature(feature, test => {
       EventWrapper = EventListWrapper.find(Event).at(0);
     });
 
-    then('the event element will be collapsed to hide the event details', () => {
-      expect(EventWrapper.find('.event-details')).toHaveLength(0);
-    });
+    then(
+      'the event element will be collapsed to hide the event details',
+      () => {
+        expect(EventWrapper.find('.event-details')).toHaveLength(0);
+      }
+    );
   });
-
 });

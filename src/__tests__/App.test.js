@@ -23,12 +23,10 @@ describe('<App /> component', () => {
 
   test('render NumberOfEvents', () => {
     expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
-  })
-
+  });
 });
 
 describe('<App /> integration', () => {
-
   test('App passes "events" state as a prop to EventList', () => {
     const AppWrapper = mount(<App />);
     const AppEventsState = AppWrapper.state('events');
@@ -43,7 +41,9 @@ describe('<App /> integration', () => {
     const AppLocationState = AppWrapper.state('locations');
 
     expect(AppLocationState).not.toEqual(undefined);
-    expect(AppWrapper.find(CitySearch).props().locations).toEqual(AppLocationState);
+    expect(AppWrapper.find(CitySearch).props().locations).toEqual(
+      AppLocationState
+    );
     AppWrapper.unmount();
   });
 
@@ -55,14 +55,16 @@ describe('<App /> integration', () => {
     CitySearchWrapper.setState({ suggestions: locations });
     const suggestions = CitySearchWrapper.state('suggestions');
 
-    const selectedIndex = Math.floor(Math.random() * (suggestions.length));
+    const selectedIndex = Math.floor(Math.random() * suggestions.length);
     const selectedCity = suggestions[selectedIndex];
 
     await CitySearchWrapper.instance().handleItemClicked(selectedCity);
 
     const allEvents = await getEvents();
-    const eventsToShow = allEvents.filter(event => event.location === selectedCity);
-    
+    const eventsToShow = allEvents.filter(
+      event => event.location === selectedCity
+    );
+
     expect(AppWrapper.state('events')).toEqual(eventsToShow);
     expect(AppWrapper.state('currentLocation')).toEqual(selectedCity);
     AppWrapper.unmount();
@@ -88,18 +90,24 @@ describe('<App /> integration', () => {
     const EventListWrapper = AppWrapper.find(EventList);
     const eventsProp = EventListWrapper.props().events;
 
-    expect(AppEventsState).toHaveLength(Math.min(AppEventsState.length, defaultNumber));
+    expect(AppEventsState).toHaveLength(
+      Math.min(AppEventsState.length, defaultNumber)
+    );
 
     /* Additional tests for EventList */
     expect(eventsProp).toHaveLength(Math.min(eventsProp.length, defaultNumber));
-    expect(EventListWrapper.find('li')).toHaveLength(Math.min(eventsProp.length, defaultNumber));
+    expect(EventListWrapper.find('li')).toHaveLength(
+      Math.min(eventsProp.length, defaultNumber)
+    );
 
     AppWrapper.unmount();
   });
 
   test('Load number of events specified in NumberOfEvents', async () => {
     const AppWrapper = await mount(<App />);
-    const numberInput = AppWrapper.find(NumberOfEvents).find('.event-number-input');
+    const numberInput = AppWrapper.find(NumberOfEvents).find(
+      '.event-number-input'
+    );
     const eventObject = {
       target: {
         value: 2
@@ -127,7 +135,9 @@ describe('<App /> integration', () => {
       currentLocation: 'Berlin'
     });
     const AppCurrentLocationState = AppWrapper.state('currentLocation');
-    const numberInput = AppWrapper.find(NumberOfEvents).find('.event-number-input');
+    const numberInput = AppWrapper.find(NumberOfEvents).find(
+      '.event-number-input'
+    );
     const eventObject = {
       target: {
         value: 2
@@ -137,8 +147,9 @@ describe('<App /> integration', () => {
     await numberInput.simulate('change', eventObject);
     expect(AppCurrentLocationState).not.toEqual(undefined);
 
-    expect(AppWrapper.state('currentLocation')).toEqual(AppCurrentLocationState);
+    expect(AppWrapper.state('currentLocation')).toEqual(
+      AppCurrentLocationState
+    );
     AppWrapper.unmount();
   });
-
 });

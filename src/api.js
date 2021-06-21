@@ -2,7 +2,7 @@ import axios from 'axios';
 import NProgress from 'nprogress';
 import { mockData } from './mock-data';
 
-export const extractLocations = (events) => {
+export const extractLocations = events => {
   let extractLocations = events.map(event => event.location);
   let locations = [...new Set(extractLocations)];
   return locations;
@@ -16,7 +16,7 @@ export const checkToken = async accessToken => {
     .catch(err => err.json());
 
   return result;
-}
+};
 
 const removeQuery = () => {
   let newurl = window.location.protocol + '//' + window.location.host;
@@ -24,12 +24,13 @@ const removeQuery = () => {
     newurl += window.location.pathname;
   }
   window.history.pushState('', '', newurl);
-}
+};
 
 const getToken = async code => {
   const encodeCode = encodeURIComponent(code);
   const { access_token } = await fetch(
-    'https://y87fhuhw1b.execute-api.eu-central-1.amazonaws.com/dev/api/token/' + encodeCode
+    'https://y87fhuhw1b.execute-api.eu-central-1.amazonaws.com/dev/api/token/' +
+      encodeCode
   )
     .then(res => res.json())
     .catch(err => err);
@@ -37,7 +38,7 @@ const getToken = async code => {
   access_token && localStorage.setItem('access_token', access_token);
 
   return access_token;
-}
+};
 
 export const getEvents = async () => {
   NProgress.start();
@@ -57,7 +58,9 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery();
-    const url = 'https://y87fhuhw1b.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/' + token;
+    const url =
+      'https://y87fhuhw1b.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/' +
+      token;
     const result = await axios.get(url);
 
     if (result.data) {
@@ -75,7 +78,7 @@ export const getAccessToken = async () => {
   const accessToken = localStorage.getItem('access_token');
   const tokenCheck = accessToken && (await checkToken(accessToken));
 
-  if(!accessToken || tokenCheck.error) {
+  if (!accessToken || tokenCheck.error) {
     await localStorage.removeItem('access_token');
     const searchParams = new URLSearchParams(window.location.search);
     const code = await searchParams.get('code');
@@ -92,4 +95,4 @@ export const getAccessToken = async () => {
   }
 
   return accessToken;
-}
+};
