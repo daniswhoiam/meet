@@ -40,9 +40,11 @@ defineFeature(feature, test => {
     let AppWrapper;
     let NumberOfEventsWrapper;
     let EventListWrapper;
-    given('the list of events has been loaded', () => {
+    given('the list of events has been loaded', async () => {
       /* Here, the whole App is necessary */
-      AppWrapper = mount(<App />);
+      AppWrapper = await mount(<App />);
+      /* Only solution found to properly initiate state with async ComponentDidMount */
+      await AppWrapper.instance().componentDidMount();
     });
 
     when('a user enters or selects the number of events to be shown', () => {

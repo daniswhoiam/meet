@@ -19,8 +19,10 @@ defineFeature(feature, test => {
     /* AppWrapper defined outside of 'when' because it is going to be used multiple times */
     let AppWrapper;
 
-    when('the user opens the app', () => {
-      AppWrapper = mount(<App />);
+    when('the user opens the app', async () => {
+      AppWrapper = await mount(<App />);
+      /* Only solution found to properly initiate state with async ComponentDidMount */
+      await AppWrapper.instance().componentDidMount();
     });
 
     then('the user should see the list of upcoming events', () => {
@@ -67,9 +69,11 @@ defineFeature(feature, test => {
     let AppWrapper;
     given('user was typing "Berlin" in the city textbox', async () => {
       AppWrapper = await mount(<App />);
-      AppWrapper.find('.city').simulate('change', {
-        target: { value: 'Berlin' }
-      });
+      /* Only solution found to properly initiate state with async ComponentDidMount */
+      await AppWrapper.instance().componentDidMount();
+      AppWrapper.find('.city')
+        .props()
+        .onChange({ target: { value: 'Berlin' } });
     });
 
     and('the list of suggested cities is showing', () => {

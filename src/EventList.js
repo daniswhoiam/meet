@@ -24,7 +24,7 @@ class EventList extends Component {
     window.addEventListener('online', this.toggleOfflineMessage);
 
     return (
-      <>
+      <div>
         <WarningAlert text={this.state.warningText} />
         <ul className="EventList">
           {events.map(event => (
@@ -33,7 +33,7 @@ class EventList extends Component {
             </li>
           ))}
         </ul>
-      </>
+      </div>
     );
   }
 }
