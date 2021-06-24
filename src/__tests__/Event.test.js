@@ -10,7 +10,7 @@ describe('<Event /> component', () => {
     if (mockData && Array.isArray(mockData)) {
       mockEvent = mockData[0];
     }
-    EventWrapper = shallow(<Event event={mockEvent}/>);
+    EventWrapper = shallow(<Event event={mockEvent} />);
   });
 
   test('event is collapsed by default', () => {
@@ -23,13 +23,13 @@ describe('<Event /> component', () => {
       eventLocation: mockEvent.location,
       eventStart: mockEvent.start.dateTime,
       eventEnd: mockEvent.end.dateTime
-    }
+    };
     const actualInfo = {
       eventName: EventWrapper.find('.event-name').prop('data-value'),
       eventLocation: EventWrapper.find('.event-location').prop('data-value'),
       eventStart: EventWrapper.find('.event-start').prop('data-value'),
       eventEnd: EventWrapper.find('.event-end').prop('data-value')
-    }
+    };
     expect(actualInfo).toMatchObject(expectedInfo);
   });
 
@@ -73,6 +73,5 @@ describe('<Event /> component', () => {
     EventWrapper.find('.hide-details').simulate('click');
     /* Details should not be there anymore */
     expect(EventWrapper.find('.event-details')).toEqual({});
-  })
-
+  });
 });

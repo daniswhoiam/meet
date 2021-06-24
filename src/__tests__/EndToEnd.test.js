@@ -3,7 +3,6 @@ import puppeteer from 'puppeteer';
 jest.setTimeout(30000);
 
 describe('show/hide an events details', () => {
-
   let browser;
   let page;
 
@@ -38,11 +37,9 @@ describe('show/hide an events details', () => {
     const eventDetails = await page.$('.event .event-details');
     expect(eventDetails).toBeNull();
   });
-
 });
 
 describe('filter events by city', () => {
-
   let browser;
   let page;
 
@@ -84,7 +81,9 @@ describe('filter events by city', () => {
 
   test('User can select a city from the suggestions', async () => {
     await page.click('.suggestions li');
-    await page.waitForFunction(() => !document.querySelector('.nprogress-busy')); // Wait until page has loaded
+    await page.waitForFunction(
+      () => !document.querySelector('.nprogress-busy')
+    ); // Wait until page has loaded
     const locations = await page.$$eval('.event-location', l => {
       return l.map(el => el.getAttribute('data-value'));
     });
@@ -93,5 +92,4 @@ describe('filter events by city', () => {
     expect(locationsWithoutDuplicates).toBeDefined();
     expect(locationsWithoutDuplicates).toHaveLength(1);
   });
-
 });
