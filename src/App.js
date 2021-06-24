@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
+import {
+  ScatterChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from 'recharts';
 import './App.scss';
 import './nprogress.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
-import { extractLocations, getEvents, checkToken, getAccessToken } from './api';
 import WelcomeScreen from './WelcomeScreen';
+import EventGenre from './EventGenre';
+import { extractLocations, getEvents, checkToken, getAccessToken } from './api';
 
 class App extends Component {
   state = {
@@ -68,6 +78,21 @@ class App extends Component {
     });
   };
 
+  /**
+   * Getting data for the scatter plot
+   *
+   * @returns Object { city, number }
+   */
+  getData = () => {
+    const { locations, events } = this.state;
+    const data = locations.map(location => {
+      const number = events.filter(event => event.location === location).length;
+      const city = location.split(', ').shift();
+      return { city, number };
+    });
+    return data;
+  };
+
   displayEventNumber = number => {
     this.setState({
       eventNumber: number
@@ -87,6 +112,33 @@ class App extends Component {
           locations={this.state.locations}
           updateEvents={this.updateEvents}
         />
+        <div className="data-vis-wrapper">
+          <h4>Events by category</h4>
+          <EventGenre events={this.state.events} />
+          <h4>Events in each city</h4>
+          <ResponsiveContainer height={400}>
+            <ScatterChart
+              margin={{
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20
+              }}
+              className="scatterChart"
+            >
+              <CartesianGrid stroke="#769769" />
+              <XAxis type="category" dataKey="city" name="city" />
+              <YAxis
+                type="number"
+                dataKey="number"
+                name="number of events"
+                allowDecimals={false}
+              />
+              <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+              <Scatter data={this.getData()} fill="#103103" />
+            </ScatterChart>
+          </ResponsiveContainer>
+        </div>
         <EventList events={this.state.events} />
         <NumberOfEvents
           eventNumber={this.state.eventNumber}
@@ -104,11 +156,12 @@ class App extends Component {
             Made with
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
               fillRule="currentColor"
               className="bi bi-suit-heart-fill"
               viewBox="0 0 16 16"
+              width="18"
+              height="18"
+              preserveAspectRatio="xMinYMid"
             >
               <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
             </svg>

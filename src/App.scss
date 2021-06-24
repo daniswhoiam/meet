@@ -146,6 +146,18 @@ input[type='number']:focus {
   margin: 0;
 }
 
+.xAxis line, .yAxis line {
+  stroke: var(--primary-color-l20);
+}
+
+.xAxis text, .yAxis, text {
+  fill: #103103;
+}
+
+.pieChart path {
+  stroke: var(--secondary-color);
+}
+
 .EventList li {
   animation: fadeIn 0.5s linear;
   animation-fill-mode: both;
@@ -294,12 +306,12 @@ input[type='number']:focus {
 .footer-text {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: 10px;
 }
 
 .bi-suit-heart-fill {
-  color: var(--secondary-color-d20);
+  fill: var(--secondary-color-d30);
   cursor: unset;
   margin: 0 5px;
 }
