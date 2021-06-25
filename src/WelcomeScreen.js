@@ -64,7 +64,7 @@ function WelcomeScreen(props) {
 }
 
 WelcomeScreen.propTypes = {
-  showWelcomeScreen: PropTypes.bool.isRequired,
+  showWelcomeScreen: PropTypes.bool,
   getAccessToken: PropTypes.func.isRequired
 };
 
