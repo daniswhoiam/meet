@@ -26,6 +26,9 @@ class App extends Component {
     showWelcomeScreen: undefined
   };
 
+  /**
+   * If no valid access token is present, show Welcome Screen. Otherwise, load events.
+   */
   async componentDidMount() {
     this.mounted = true;
     const accessToken = localStorage.getItem('access_token');
@@ -59,6 +62,12 @@ class App extends Component {
     this.mounted = false;
   }
 
+  /**
+   * Filters list depending on location or number of events to be shown.
+   *
+   * @param {string} location Location by which list of events should be filtered.
+   * @param {number} number Number of events that should be shown
+   */
   updateEvents = (location, number) => {
     /* Default values */
     location = location || this.state.currentLocation;
@@ -81,7 +90,7 @@ class App extends Component {
   /**
    * Getting data for the scatter plot
    *
-   * @returns Object { city, number }
+   * @returns {Array} data Array with cities and the number of events taking place in those cities.
    */
   getData = () => {
     const { locations, events } = this.state;
@@ -93,6 +102,11 @@ class App extends Component {
     return data;
   };
 
+  /**
+   * Function that is forwarded as a prop to change eventNumber in state.
+   *
+   * @param {number} number Number of events to update state.
+   */
   displayEventNumber = number => {
     this.setState({
       eventNumber: number

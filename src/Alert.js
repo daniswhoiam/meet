@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 
+/**
+ * Basic Alert Template
+ */
 class Alert extends Component {
   constructor(props) {
     super(props);
     this.color = null;
   }
 
+  /**
+   * Access to color setting
+   * 
+   * @returns Object {}
+   */
   getStyle = () => {
     return {
       color: this.color
@@ -21,6 +29,9 @@ class Alert extends Component {
   }
 }
 
+/**
+ * Low importance alert to inform user
+ */
 class InfoAlert extends Alert {
   constructor(props) {
     super(props);
@@ -28,6 +39,9 @@ class InfoAlert extends Alert {
   }
 }
 
+/**
+ * High importance alert to point out an error
+ */
 class ErrorAlert extends Alert {
   constructor(props) {
     super(props);
@@ -35,6 +49,9 @@ class ErrorAlert extends Alert {
   }
 }
 
+/**
+ * Medium importance alert to warn user about something important
+ */
 class WarningAlert extends Alert {
   constructor(props) {
     super(props);

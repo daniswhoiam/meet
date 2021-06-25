@@ -10,6 +10,11 @@ class CitySearch extends Component {
     infoText: ''
   };
 
+  /**
+   * Render suggestions based on user input.
+   *
+   * @param {Event} event Event that fires when something is entered into the input field.
+   */
   handleInputChanged = event => {
     const value = event.target.value;
     const suggestions = this.props.locations.filter(location => {
@@ -31,6 +36,11 @@ class CitySearch extends Component {
     }
   };
 
+  /**
+   * Hide suggestions and re-render events list based on new filter criteria.
+   *
+   * @param {string} suggestion Suggestion that is chosen by the user.
+   */
   handleItemClicked = suggestion => {
     this.setState({
       query: suggestion,

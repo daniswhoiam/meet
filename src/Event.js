@@ -6,6 +6,9 @@ class Event extends Component {
     showDetails: false
   };
 
+  /**
+   * Expand event information upon user click on button.
+   */
   handleShowDetails = () => {
     const newValue = !this.state.showDetails;
     this.setState({
@@ -64,7 +67,12 @@ class Event extends Component {
         {this.state.showDetails && (
           <div className="event-details">
             <p className="event-description">{event.description}</p>
-            <a href={event.htmlLink} rel="external noreferrer" target="_blank" className="event-link">
+            <a
+              href={event.htmlLink}
+              rel="external noreferrer"
+              target="_blank"
+              className="event-link"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

@@ -12,7 +12,13 @@ export default function EventGenre({ events }) {
     '#8aa94d'
   ];
 
+  /* Update data for the pie chart each time the events list changes. */
   useEffect(() => {
+    /**
+     * Generate data for genre pie chart.
+     *
+     * @returns {Array} Genres (if they appear more than once) and how often they appear in the events.
+     */
     const getData = () => {
       const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'AngularJS'];
       const data = genres.map(genre => {
@@ -43,8 +49,9 @@ export default function EventGenre({ events }) {
           }
         >
           {
+            /* Distinctive colors for each category */
             data.map((entry, index) => {
-              return <Cell key={`cell-${index}`} fill={colors[index]} />
+              return <Cell key={`cell-${index}`} fill={colors[index]} />;
             })
           }
         </Pie>

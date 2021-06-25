@@ -7,6 +7,11 @@ class NumberOfEvents extends Component {
     errorText: ''
   };
 
+  /**
+   * Change number of shown events.
+   *
+   * @param {Event} event Event that fires when new number is entered into the input field.
+   */
   handleNumberSetting = event => {
     const newValue = event.target.value;
 

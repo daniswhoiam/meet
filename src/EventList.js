@@ -11,6 +11,9 @@ class EventList extends Component {
     warningText: navigator.onLine ? '' : this.warningMessage
   };
 
+  /**
+   * Show warning message if there is no internet connection
+   */
   toggleOfflineMessage = () => {
     navigator.onLine
       ? this.setState({ warningText: '' })
@@ -20,6 +23,7 @@ class EventList extends Component {
   render() {
     const { events } = this.props;
 
+    /* If connection gets lost after user has been online first */
     window.addEventListener('offline', this.toggleOfflineMessage);
     window.addEventListener('online', this.toggleOfflineMessage);
 
